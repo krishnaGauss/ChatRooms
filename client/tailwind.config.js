@@ -3,7 +3,7 @@ export default {
     darkMode: ["class"],
     content: ['./public/index.html',
     './src/**/*.{html,js, jsx}','./src/**/*.jsx',
-	'client/src/components/*.jsx'],
+	'./src/components/ui/*.{jsx, js}'],
   theme: {
   	extend: {
   		borderRadius: {
