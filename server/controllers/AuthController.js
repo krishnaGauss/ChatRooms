@@ -43,16 +43,14 @@ export const login = async (req, res, next) => {
     if (!email || !password) {
       return res.status(400).send("Email and password is required.");
     }
-    const user = await User.findOne({ email});
-    if(!user){
+    const user = await User.findOne({ email });
+    if (!user) {
       return res.status(404).send("User with this email does not exist.");
-      
     }
-    
-    const auth = await compare(password, user.password);
-    if(!auth){
-      return res.status(400).send("Password is incorrect.");
 
+    const auth = await compare(password, user.password);
+    if (!auth) {
+      return res.status(400).send("Password is incorrect.");
     }
     res.cookie("jwt", createToken(email, user.id), {
       maxAge,
@@ -63,8 +61,8 @@ export const login = async (req, res, next) => {
       user: {
         id: user.id,
         email: user.email,
-        firstName:user.firstName,
-        lastName:user.lastName,
+        firstName: user.firstName,
+        lastName: user.lastName,
         image: user.image,
         profileSetup: user.profileSetup,
         color: user.color,
@@ -78,22 +76,18 @@ export const login = async (req, res, next) => {
 
 export const getUserInfo = async (req, res, next) => {
   try {
-    
     const userData = await User.findById(req.userId);
-    if(!userData){
+    if (!userData) {
       return res.status(404).send("User with given id not found");
-      
     }
     return res.status(200).json({
-     
-        id: userData.id,
-        email: userData.email,
-        firstName:userData.firstName,
-        lastName:userData.lastName,
-        image: userData.image,
-        profileSetup: userData.profileSetup,
-        color: userData.color,
-      
+      id: userData.id,
+      email: userData.email,
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      image: userData.image,
+      profileSetup: userData.profileSetup,
+      color: userData.color,
     });
   } catch (error) {
     console.log({ error });
