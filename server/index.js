@@ -19,10 +19,12 @@ app.use(
   })
 );
 
+app.use("/uploads/profiles", express.static("uploads/profiles"));
+
 app.use(cookieParser()); //getting cookies
 app.use(express.json());
 
-app.use("/api/auth", authRoutes)
+app.use("/api/auth", authRoutes);
 
 const server = app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
