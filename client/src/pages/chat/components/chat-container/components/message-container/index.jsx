@@ -1,8 +1,10 @@
 import { apiClient } from "@/lib/api-client";
 import { useAppStore } from "@/store";
-import { GET_ALL_MESSAGES } from "@/utils/constants";
+import { GET_ALL_MESSAGES, HOST } from "@/utils/constants";
 import moment from "moment";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { MdFolderZip } from "react-icons/md";
+import { IoMdDownload } from "react-icons/io";
 
 const MessageContainer = () => {
   const {
@@ -13,6 +15,8 @@ const MessageContainer = () => {
     setSelectedChatMessages,
   } = useAppStore();
   const scrollRef = useRef();
+  const [showImage, setshowImage] = useState(false);
+  const [imageURL, setImageURL] = useState(null);
 
   useEffect(() => {
     const getMessages = async () => {
@@ -42,6 +46,26 @@ const MessageContainer = () => {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [selectedChatMessages]);
+
+  const checkIfImage = (filePath) => {
+    const imageRegex =
+      /\.(jpg|jpeg|png|gif|bmp|webp|svg|heic|heif|ico|tif|tiff)$/i;
+    return imageRegex.test(filePath);
+  };
+
+  const downloadFile = async (url) => {
+    const response = await apiClient.get(`${HOST}/${url}`, {
+      responseType: "blob",
+    });
+    const urlBlob = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement("a");
+    link.href = urlBlob;
+    link.setAttribute("download", url.split("/").pop());
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(urlBlob);
+  };
 
   const renderMessages = () => {
     let lastDate = null;
@@ -79,6 +103,43 @@ const MessageContainer = () => {
           {message.content}
         </div>
       )}
+      {message.messageType === "file" && (
+        <div
+          className={`${
+            message.sender !== selectedChatData._id
+              ? "bg-[#8417ff]/30 text-white/80 border-[#8417ff]/50 "
+              : "bg-[#2a2b33]/30 text-white/80 border-[#ffffff]/20"
+          } border inline-block p-4 rounded my-1 max-w-[50%] break-words`}
+        >
+          {checkIfImage(message.fileUrl) ? (
+            <div className="cursor-pointer" onClick={()=>{
+              setshowImage(true);
+              setImageURL(message.fileUrl)
+            }}>
+            
+              <img
+                src={`${HOST}/${message.fileUrl}`}
+                height={300}
+                width={300}
+              />
+            </div>
+          ) : (
+            <div className="flex items-center justify-center gap-4 ">
+              <span className="text-white/80 text-3xl bg-black/20 rounded-full p-3 ">
+                <MdFolderZip />
+              </span>
+              <span>{message.fileUrl.split("/").pop()}</span>
+              <span
+                className="bg-black/20 p-3 text-2xl rounded-full hover:bg-black/50 cursor-pointer transition-all duration-300"
+                onClick={() => downloadFile(message.fileUrl)}
+              >
+                <IoMdDownload />
+              </span>
+            </div>
+          )}
+        </div>
+      )}
+
       <div className="text-xs text-gray-600 ">
         {moment(message.timestamp).format("LT")}
       </div>
@@ -88,6 +149,11 @@ const MessageContainer = () => {
   return (
     <div className="flex-1 overflow-y-auto scrollbar-hidden p-4 px-8 md:w-[65vw] lg:w-[70vw] xl:w-[70vw] w-full h-[75vh]">
       {renderMessages()}
+      <div ref={scrollRef}>
+      {
+        showImage && <div className="fixed"></div>
+      }
+      </div>
     </div>
   );
 };
