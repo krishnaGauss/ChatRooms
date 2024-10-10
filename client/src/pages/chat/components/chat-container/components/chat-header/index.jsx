@@ -20,7 +20,8 @@ function ChatHeader() {
             </button>
           </div>
           <div className="w-12 h-12 relative">
-            <Avatar className="h-12 w-12  rounded-full overflow-hidden">
+            {
+              selectedChatType==="contact"?<Avatar className="h-12 w-12  rounded-full overflow-hidden">
               {selectedChatData.image ? (
                 <AvatarImage
                   src={`${HOST}/${selectedChatData.image}`}
@@ -38,8 +39,21 @@ function ChatHeader() {
                     : selectedChatData.email.split("").shift()}
                 </div>
               )}
-            </Avatar>
+            </Avatar>:<div className="bg-[#ffffff22] h-10 w-10 flex items-center  justify-center rounded-full">
+                #
+              </div>
+            }
+            
           </div>
+          {
+            selectedChatType==="channel" && (
+              <div className="flex flex-col">
+              <span>
+                {selectedChatData.name}
+              </span>
+            </div>
+            )
+          }
           {selectedChatType === "contact" && (
             <div className="flex flex-col">
               <span>

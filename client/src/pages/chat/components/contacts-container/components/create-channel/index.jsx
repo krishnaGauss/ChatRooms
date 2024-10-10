@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { apiClient } from "@/lib/api-client";
 import {
+  CREATE_CHANNEL_ROUTE,
   GET_ALL_CONTACTS_ROUTE,
 } from "@/utils/constants";
 import { useAppStore } from "@/store";
@@ -23,7 +24,7 @@ import { Button } from "@/components/ui/button";
 import MultipleSelector from "@/components/ui/multipleselect";
 
 const CreateChannel = () => {
-  const { setSelectedChatData, setSelectedChatType } = useAppStore();
+  const { setSelectedChatData, setSelectedChatType, addChannel } = useAppStore();
 
   const [newChannelModel, setNewChannelModel] = useState(false);
   const [searchedContacts, setSearchedContacts] = useState([]);
@@ -42,7 +43,25 @@ const CreateChannel = () => {
     getData();
   }, []);
 
-  const createChannel = async () => {};
+  const createChannel = async () => {
+    try{
+      if(channelName.length>0 && selectedContacts.length>0){
+
+        const response = await apiClient.post(CREATE_CHANNEL_ROUTE,{
+          name:channelName,
+          members:selectedContacts.map((contact)=>contact.value)
+        }, {withCredentials:true})
+        if(response.status===200){
+          setChannelName("")
+          setSelectedContacts([])
+          setNewChannelModel(false)
+          addChannel(response.data.channel)
+        }
+      }
+    }catch(err){
+      console.log({err})
+    }
+  };
 
   return (
     <div>
