@@ -98,23 +98,23 @@ npm run dev
 
 ###  Authorisation Page
 
-![Authorisation Screenshot](../assets/Screenshot%20(49).png)
+![Authorisation Screenshot](/assets/Screenshot%20(49).png)
 
 ### Profile Setup Page
 
-![Profile Screenshot](../ChatRooms/assets/Screenshot%20(54).png)
+![Profile Screenshot](/assets/Screenshot%20(54).png)
 
 ### Chat Interface
 
-![Chats Screenshot](../ChatRooms/assets/Screenshot%20(50).png)
+![Chats Screenshot](/assets/Screenshot%20(50).png)
 
 ### Direct Messages UI
 
-![DM Screenshot](../ChatRooms/assets/Screenshot%20(51).png)
+![DM Screenshot](/assets/Screenshot%20(51).png)
 
 ### Channel Messages UI
 
-![Channel Messages Screenshot](../ChatRooms/assets/Screenshot%20(52).png)
+![Channel Messages Screenshot](/assets/Screenshot%20(52).png)
 
 ## License
 
