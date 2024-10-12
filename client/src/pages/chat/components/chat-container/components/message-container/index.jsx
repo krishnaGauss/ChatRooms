@@ -75,8 +75,8 @@ const MessageContainer = () => {
     link.click();
     link.remove();
     window.URL.revokeObjectURL(urlBlob);
-    setIsDownloading(false)
-    setFileDownloadProgress(0)
+    setIsDownloading(false);
+    setFileDownloadProgress(0);
   };
 
   const renderMessages = () => {
@@ -93,6 +93,7 @@ const MessageContainer = () => {
             </div>
           )}
           {selectedChatType === "contact" && renderDMMessages(message)}
+          {selectedChatType === "channel" && renderChannelMessages(message)}
         </div>
       );
     });
@@ -159,6 +160,29 @@ const MessageContainer = () => {
       </div>
     </div>
   );
+
+  const renderChannelMessages = (message) => {
+    return (
+      <div
+        className={`mt-5 ${
+          message.sender._id !== userInfo.id ? "text-left" : "text-right"
+        }`}
+      >
+         {message.messageType === "text" && (
+        <div
+          className={`${
+            message.sender._id === userInfo.id
+              ? "bg-[#8417ff]/30 text-white/80 border-[#8417ff]/50 "
+              : "bg-[#2a2b33]/30 text-white/80 border-[#ffffff]/20"
+          } border inline-block p-4 rounded my-1 max-w-[50%] break-words`}
+        >
+          {message.content}
+        </div>
+      )}
+
+      </div>
+    );
+  };
 
   return (
     <div className="flex-1 overflow-y-auto scrollbar-hidden p-4 px-8 md:w-[65vw] lg:w-[70vw] xl:w-[70vw] w-full h-[75vh]">

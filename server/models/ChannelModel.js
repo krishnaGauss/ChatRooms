@@ -1,4 +1,4 @@
-import { mongoose } from "mongoose";
+import mongoose from "mongoose";
 
 const channelSchema = new mongoose.Schema({
   name: {
@@ -12,13 +12,12 @@ const channelSchema = new mongoose.Schema({
       required: true,
     },
   ],
-  admin: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: "Users",
-      required: true,
-    },
-  ],
+  admin: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Users",
+    required: true,
+  },
+
   messages: [
     {
       type: mongoose.Schema.ObjectId,
