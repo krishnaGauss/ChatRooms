@@ -98,7 +98,7 @@ npm run dev
 
 ###  Authorisation Page
 
-![Authorisation Screenshot](../ChatRooms/assets/Screenshot%20(49).png)
+![Authorisation Screenshot](../assets/Screenshot%20(49).png)
 
 ### Profile Setup Page
 
