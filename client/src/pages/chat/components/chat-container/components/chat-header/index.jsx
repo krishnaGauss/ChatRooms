@@ -20,40 +20,37 @@ function ChatHeader() {
             </button>
           </div>
           <div className="w-12 h-12 relative">
-            {
-              selectedChatType==="contact"?<Avatar className="h-12 w-12  rounded-full overflow-hidden">
-              {selectedChatData.image ? (
-                <AvatarImage
-                  src={`${HOST}/${selectedChatData.image}`}
-                  alt="profile"
-                  className="object-cover w-full h-full bg-black"
-                />
-              ) : (
-                <div
-                  className={`uppercase h-12 w-12  text-lg border-[1px] flex items-center justify-center rounded-full ${getColor(
-                    selectedChatData.color
-                  )}`}
-                >
-                  {selectedChatData.firstName
-                    ? selectedChatData.firstName.split("").shift()
-                    : selectedChatData.email.split("").shift()}
-                </div>
-              )}
-            </Avatar>:<div className="bg-[#ffffff22] h-10 w-10 flex items-center  justify-center rounded-full">
+            {selectedChatType === "contact" ? (
+              <Avatar className="h-12 w-12  rounded-full overflow-hidden">
+                {selectedChatData.image ? (
+                  <AvatarImage
+                    src={`${HOST}/${selectedChatData.image}`}
+                    alt="profile"
+                    className="object-cover w-full h-full bg-black"
+                  />
+                ) : (
+                  <div
+                    className={`uppercase h-12 w-12  text-lg border-[1px] flex items-center justify-center rounded-full ${getColor(
+                      selectedChatData.color
+                    )}`}
+                  >
+                    {selectedChatData.firstName
+                      ? selectedChatData.firstName.split("").shift()
+                      : selectedChatData.email.split("").shift()}
+                  </div>
+                )}
+              </Avatar>
+            ) : (
+              <div className="bg-[#ffffff22] h-10 w-10 flex items-center  justify-center rounded-full">
                 #
               </div>
-            }
-            
+            )}
           </div>
-          {
-            selectedChatType==="channel" && (
-              <div className="flex flex-col">
-              <span>
-                {selectedChatData.name}
-              </span>
+          {selectedChatType === "channel" && (
+            <div className="flex flex-col">
+              <span>{selectedChatData.name}</span>
             </div>
-            )
-          }
+          )}
           {selectedChatType === "contact" && (
             <div className="flex flex-col">
               <span>
