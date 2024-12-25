@@ -17,7 +17,7 @@ const databaseURL = process.env.DATABASE_URL;
 
 app.use(
   cors({
-    origin: [process.env.ORIGIN], //frontend urls which send requests
+    origin: ["https://chats-deploy-6y5rgsbga-krishna-goswamis-projects.vercel.app/"], //frontend urls which send requests
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true, //enable cookies
   })
